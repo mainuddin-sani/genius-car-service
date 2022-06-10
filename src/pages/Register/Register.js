@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import {Link} from 'react-router-dom';
-import {useNavigate, useLocation} from 'react-router-dom';
-import {useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {Link} from "react-router-dom";
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from "../../firebase.init";
+import {useNavigate} from 'react-router-dom';
 
-
-const Login = () => {
+const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [signInWithEmailAndPassword,user,loading,error] = useSignInWithEmailAndPassword(auth);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+    const [createUserWithEmailAndPassword,user,loading,] = useCreateUserWithEmailAndPassword(auth);
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
     // event handler
     const emailHandler = (e)=>{
         setEmail(e.target.value);
@@ -21,18 +19,21 @@ const Login = () => {
     const passwordHandler = (e)=>{
         setPassword(e.target.value)
     }
+    const confirmPasswordHandler = (e)=>{
+        setConfirmPassword(e.target.value)
+    }
 
     if(user){
-        navigate(from, {replace: true});
+        navigate('/home');
     }
     // form submit 
-    const signInhandler = (e)=>{
+    const formSubmitHandler = (e)=>{
         e.preventDefault();
-        if(password.length < 6){
-            setErrorMessage('password lenght 6 up');
+        if(password !== confirmPassword){
+            setError('Does not password match');
             return;
         }
-        signInWithEmailAndPassword(email, password);
+        createUserWithEmailAndPassword(email, password);
     }
   return (
     <section className="pt-5 pb-5">
@@ -41,7 +42,7 @@ const Login = () => {
           <Col lg={6} className="m-auto">
             <Card>
               <Card.Body>
-                <Form onSubmit={signInhandler}>
+                <Form onSubmit={formSubmitHandler}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -64,16 +65,22 @@ const Login = () => {
                       required
                     />
                   </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                    onBlur={confirmPasswordHandler}
+                      type="password"
+                      placeholder="Password"
+                      required
+                    />
+                  </Form.Group>
                   <div className="d-flex justify-content-between">
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                       <Form.Check type="checkbox" label="Check me out" />
                     </Form.Group>
-                    <Link to="/forgot-password">Forgot Password ?</Link>
+                    <Link to="/login">Login</Link>
                   </div>
-                  <p>{errorMessage}</p>
-                  {
-                    error ? <p>{error?.message}</p> : ''
-                  }
+                  <p style={{color: 'red'}}>{error}</p>
                   <Button variant="primary" type="submit">
                     Login
                   </Button>
@@ -87,4 +94,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
