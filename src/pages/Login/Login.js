@@ -33,6 +33,7 @@ const Login = () => {
             return;
         }
         signInWithEmailAndPassword(email, password);
+        console.log(e.target.email);
     }
   return (
     <section className="pt-5 pb-5">
@@ -46,6 +47,7 @@ const Login = () => {
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
                     onBlur={emailHandler}
+                    name="email"
                       type="email"
                       placeholder="Enter email"
                       required
@@ -78,6 +80,7 @@ const Login = () => {
                     Login
                   </Button>
                 </Form>
+                <p>New Genius Car? <Link to='/register' className="text-danger">Please Login</Link></p>
               </Card.Body>
             </Card>
           </Col>

@@ -78,13 +78,13 @@ const Register = () => {
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                       <Form.Check type="checkbox" label="Check me out" />
                     </Form.Group>
-                    <Link to="/login">Login</Link>
                   </div>
                   <p style={{color: 'red'}}>{error}</p>
                   <Button variant="primary" type="submit">
                     Login
                   </Button>
                 </Form>
+                <p>Already have a account <Link to="/login">Login</Link></p>
               </Card.Body>
             </Card>
           </Col>
