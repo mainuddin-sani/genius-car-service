@@ -15,7 +15,7 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
     // event handler
-    const emailHandler = (e)=>{
+    const emailHandler = (e)=>{  
         setEmail(e.target.value);
     }
     const passwordHandler = (e)=>{
