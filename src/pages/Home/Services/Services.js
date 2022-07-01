@@ -8,7 +8,7 @@ const Services = () => {
 
   // dataload form json file
   useEffect(() => {
-    fetch("http://localhost:5000/service")
+    fetch("http://localhost:5000/services")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);
@@ -19,7 +19,7 @@ const Services = () => {
         <h3 className="pb-4 text-center">Our Service</h3>
         <Row className="g-4">
           {services.map((service) => (
-            <Service key={service.id} service={service}></Service>
+            <Service key={service._id} service={service}></Service>
           ))}
         </Row>
       </Container>

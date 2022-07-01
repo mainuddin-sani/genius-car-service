@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import RequireAuth from './RequireAuth/RequireAuth';
+import ServicesDetails from './pages/Home/ServicesDetails/ServicesDetails';
+import NotFound from './pages/Shared/NotFound/NotFound';
 
 function App() {
   return (
@@ -22,9 +24,10 @@ function App() {
           </RequireAuth>
         }></Route>
         <Route path='/home' element={<Home></Home>}></Route>
+        <Route path='/home/:id' element={<ServicesDetails></ServicesDetails>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
-        <Route path='/*' element={<Register></Register>}></Route>
+        <Route path='/*' element={<NotFound></NotFound>}></Route>
       </Routes>
       <Footer></Footer>
     </div>
